@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sensei - Academia de Japonés</title>
+
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background: #fff5f5;
+  margin: 0;
+  color: #333;
+}
+
+header {
+  background: #d94f70;
+  color: white;
+  text-align: center;
+  padding: 35px;
+}
+
+h1 { font-size: 38px; }
+
+.container {
+  max-width: 1000px;
+  margin: auto;
+  padding: 25px;
+}
+
+.card {
+  background: white;
+  padding: 25px;
+  margin: 20px 0;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px #ddd;
+}
+
+button {
+  background: #d94f70;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin: 5px;
+}
+
+button:hover {
+  background: #b83d5c;
+}
+
+.progress {
+  background: #eee;
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  background: #57b894;
+  height: 22px;
+  width: 0%;
+  transition: width .3s;
+}
+
+.japanese {
+  font-size: 35px;
+  color: #d94f70;
+  text-align: center;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>🌸 SENSEI 🌸</h1>
+<h2>私の日本語学校</h2>
+<p>Watashi no Nihongo Gakkō</p>
+<p>Mi Academia de Japonés</p>
+</header>
+
+<div class="container">
+
+<div class="card">
+<h2>🇯🇵 Bienvenido, Charlie</h2>
+<p>Tu viaje para aprender japonés comienza aquí.</p>
+<p>Programa: 12 semanas | 4 etapas</p>
+</div>
+
+<div class="card">
+<h2>📊 Mi progreso</h2>
+<div class="progress">
+<div class="progress-bar" id="progress"></div>
+</div>
+<p id="progressText">Progreso: 0%</p>
+</div>
+
+<div class="card">
+<h2>📚 Programa de aprendizaje</h2>
+<ul>
+<li>🌸 Etapa 1: Fundamentos</li>
+<li>🌊 Etapa 2: Comunicación básica</li>
+<li>🍃 Etapa 3: Japonés cotidiano</li>
+<li>🎌 Etapa 4: Conversación elemental</li>
+</ul>
+</div>
+
+<div class="card">
+<h2>🎓 Lección 1: Saludos</h2>
+
+<p class="japanese" id="japanese">こんにちは</p>
+<h3 id="romaji" style="text-align:center">Konnichiwa</h3>
+<p id="translation" style="text-align:center">Hola</p>
+
+<div style="text-align:center">
+<button onclick="previous()">⬅ Anterior</button>
+<button onclick="next()">Siguiente ➡</button>
+<button onclick="speak()">🔊 Escuchar</button>
+</div>
+</div>
+
+<div class="card">
+<h2>✏️ Ejercicio</h2>
+<p>¿Qué significa こんにちは (Konnichiwa)?</p>
+
+<button onclick="answer(false)">Gracias</button>
+<button onclick="answer(true)">Hola</button>
+<button onclick="answer(false)">Adiós</button>
+
+<p id="result"></p>
+</div>
+
+<div class="card">
+<h2>✅ Completar lección</h2>
+<button onclick="completeLesson()">
+Marcar lección como completada
+</button>
+</div>
+
+</div>
+
+<script>
+
+const words = [
+["こんにちは","Konnichiwa","Hola"],
+["おはようございます","Ohayō gozaimasu","Buenos días"],
+["こんばんは","Konbanwa","Buenas noches (saludo)"],
+["ありがとう","Arigatō","Gracias"],
+["さようなら","Sayōnara","Adiós"],
+["はじめまして","Hajimemashite","Mucho gusto"]
+];
+
+let index = 0;
+
+function showWord(){
+document.getElementById("japanese").innerText=words[index][0];
+document.getElementById("romaji").innerText=words[index][1];
+document.getElementById("translation").innerText=words[index][2];
+}
+
+function next(){
+index=(index+1)%words.length;
+showWord();
+}
+
+function previous(){
+index=(index-1+words.length)%words.length;
+showWord();
+}
+
+function speak(){
+let msg=new SpeechSynthesisUtterance(words[index][0]);
+msg.lang="ja-JP";
+msg.rate=0.75;
+speechSynthesis.speak(msg);
+}
+
+function answer(correct){
+document.getElementById("result").innerText =
+correct ? "🎉 ¡Correcto!" : "Inténtalo nuevamente.";
+}
+
+function completeLesson(){
+localStorage.setItem("senseiLesson1","completed");
+updateProgress();
+}
+
+function updateProgress(){
+let completed =
+localStorage.getItem("senseiLesson1")==="completed";
+
+let progress=completed?100:0;
+
+document.getElementById("progress").style.width=progress+"%";
+document.getElementById("progressText").innerText =
+"Lección 1: "+progress+"% completada";
+}
+
+updateProgress();
+
+</script>
+
+</body>
+</html>
