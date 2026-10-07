@@ -3,201 +3,766 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Sensei - Academia de Japonés</title>
+<title>Sensei 🍃 Academia de Japonés</title>
 
 <style>
+:root {
+  --verde: #355c43;
+  --verde-claro: #e5efdf;
+  --naranja: #d98b45;
+  --pergamino: #f8f4e8;
+  --blanco: #fffdf7;
+  --texto: #283b30;
+}
+
+* { box-sizing: border-box; }
+
 body {
-  font-family: Arial, sans-serif;
-  background: #fff5f5;
   margin: 0;
-  color: #333;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: var(--pergamino);
+  color: var(--texto);
+}
+
+.app {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: 245px;
+  background: var(--verde);
+  color: white;
+  padding: 25px 15px;
+  flex-shrink: 0;
+}
+
+.logo {
+  text-align: center;
+  padding: 15px 0 30px;
+}
+
+.logo h1 {
+  font-size: 32px;
+  margin: 8px 0;
+}
+
+.logo p {
+  font-size: 13px;
+  color: #dbe9d7;
+}
+
+.nav {
+  display: block;
+  width: 100%;
+  padding: 15px;
+  margin: 7px 0;
+  border: none;
+  background: transparent;
+  color: white;
+  text-align: left;
+  font-size: 16px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.nav:hover, .nav.active {
+  background: #537b5d;
+}
+
+.main {
+  flex: 1;
+  min-width: 0;
 }
 
 header {
-  background: #d94f70;
-  color: white;
-  text-align: center;
-  padding: 35px;
+  padding: 45px 35px;
+  background: linear-gradient(120deg,#dcebd5,#f5e4c5);
+  border-bottom: 4px solid var(--naranja);
 }
 
-h1 { font-size: 38px; }
+header h2 {
+  font-size: 34px;
+  margin: 0 0 10px;
+}
 
-.container {
-  max-width: 1000px;
+header p {
+  line-height: 1.7;
+}
+
+.content {
+  max-width: 1150px;
   margin: auto;
   padding: 25px;
 }
 
+.page { display: none; }
+.page.active { display: block; }
+
 .card {
-  background: white;
+  background: var(--blanco);
   padding: 25px;
-  margin: 20px 0;
-  border-radius: 15px;
-  box-shadow: 0 4px 12px #ddd;
+  margin-bottom: 20px;
+  border-radius: 18px;
+  border: 1px solid #e4dcc8;
+  box-shadow: 0 5px 15px #0000000c;
 }
 
-button {
-  background: #d94f70;
+.card h3 {
+  color: var(--verde);
+}
+
+.btn {
+  background: var(--verde);
   color: white;
   border: none;
-  padding: 12px 20px;
-  border-radius: 8px;
-  cursor: pointer;
+  padding: 12px 19px;
+  border-radius: 10px;
   margin: 5px;
+  cursor: pointer;
+  font-size: 15px;
 }
 
-button:hover {
-  background: #b83d5c;
+.btn:hover { background: #508063; }
+
+.btn.orange { background: var(--naranja); }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  gap: 18px;
 }
+
+.stage {
+  padding: 20px;
+  border-radius: 14px;
+  background: #edf4e8;
+  margin: 12px 0;
+}
+
+.stage:nth-child(2) { background: #f8ebd8; }
+.stage:nth-child(3) { background: #e5ede7; }
+.stage:nth-child(4) { background: #f0e9df; }
 
 .progress {
-  background: #eee;
-  border-radius: 15px;
+  background: #e6e6dc;
+  border-radius: 20px;
+  height: 20px;
   overflow: hidden;
 }
 
 .progress-bar {
-  background: #57b894;
-  height: 22px;
   width: 0%;
+  height: 100%;
+  background: linear-gradient(90deg,#4d9562,#e7a15b);
   transition: width .3s;
 }
 
 .japanese {
-  font-size: 35px;
-  color: #d94f70;
+  font-size: 43px;
+  color: var(--verde);
   text-align: center;
+}
+
+.center { text-align: center; }
+
+.flashcard {
+  max-width: 520px;
+  margin: 20px auto;
+  min-height: 200px;
+  padding: 25px;
+  background: #f1f6e9;
+  border: 2px dashed #89a88a;
+  border-radius: 18px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.flashcard small {
+  color: #68766a;
+}
+
+.week {
+  background: white;
+  border: 1px solid #e6dec9;
+  padding: 16px;
+  border-radius: 12px;
+  margin: 12px 0;
+}
+
+.week summary {
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.week p { line-height: 1.7; }
+
+.option {
+  background: #edf1e5;
+  color: var(--texto);
+  border: 1px solid #cad7bf;
+  padding: 13px 18px;
+  border-radius: 10px;
+  margin: 6px;
+  cursor: pointer;
+}
+
+.option:hover { background: #dce8d3; }
+
+#feedback {
+  font-weight: bold;
+  margin-top: 15px;
+}
+
+.note {
+  font-size: 13px;
+  color: #697469;
+  line-height: 1.6;
+}
+
+@media(max-width:750px) {
+  .app { flex-direction: column; }
+
+  .sidebar {
+    width: 100%;
+    padding: 12px;
+  }
+
+  .logo { padding: 8px; }
+
+  .sidebar nav {
+    display: flex;
+    overflow-x: auto;
+  }
+
+  .nav {
+    white-space: nowrap;
+    width: auto;
+  }
+
+  .grid { grid-template-columns: 1fr; }
+
+  header { padding: 25px; }
+
+  .content { padding: 15px; }
 }
 </style>
 </head>
 
 <body>
 
-<header>
-<h1>🌸 SENSEI 🌸</h1>
-<h2>私の日本語学校</h2>
+<div class="app">
+
+<aside class="sidebar">
+
+<div class="logo">
+<div style="font-size:40px">🍃</div>
+<h1>SENSEI</h1>
+<p>私の日本語学校</p>
 <p>Watashi no Nihongo Gakkō</p>
 <p>Mi Academia de Japonés</p>
+</div>
+
+<nav>
+<button class="nav active" onclick="openPage('inicio',this)">🏠 Inicio</button>
+<button class="nav" onclick="openPage('clases',this)">📚 Mis clases</button>
+<button class="nav" onclick="openPage('vocabulario',this)">🃏 Vocabulario</button>
+<button class="nav" onclick="openPage('pronunciacion',this)">🎤 Pronunciación</button>
+<button class="nav" onclick="openPage('evaluaciones',this)">📝 Evaluaciones</button>
+<button class="nav" onclick="openPage('progreso',this)">📊 Mi progreso</button>
+</nav>
+
+</aside>
+
+<div class="main">
+
+<header>
+<h2>🍃 ようこそ、Charlie！</h2>
+<p><b>Yōkoso, Charlie!</b> — ¡Bienvenido, Charlie!</p>
+<p>Tu camino para aprender japonés comienza aquí.</p>
+<p>🇯🇵 12 semanas · 4 etapas · Aprendizaje progresivo</p>
 </header>
 
-<div class="container">
+<div class="content">
+
+<!-- INICIO -->
+
+<section id="inicio" class="page active">
+
+<h2>🏯 Bienvenido a tu academia</h2>
 
 <div class="card">
-<h2>🇯🇵 Bienvenido, Charlie</h2>
-<p>Tu viaje para aprender japonés comienza aquí.</p>
-<p>Programa: 12 semanas | 4 etapas</p>
+<h3>🌱 Tu entrenamiento de japonés</h3>
+<p>Aprenderás japonés desde cero mediante lecciones,
+tarjetas, ejercicios, pronunciación y evaluaciones.</p>
+<p>Tu objetivo es alcanzar una conversación básica en japonés.</p>
+<button class="btn" onclick="go('clases')">Comenzar entrenamiento →</button>
 </div>
 
 <div class="card">
-<h2>📊 Mi progreso</h2>
+<h3>📊 Tu progreso general</h3>
 <div class="progress">
-<div class="progress-bar" id="progress"></div>
+<div class="progress-bar" id="homeProgress"></div>
 </div>
-<p id="progressText">Progreso: 0%</p>
-</div>
-
-<div class="card">
-<h2>📚 Programa de aprendizaje</h2>
-<ul>
-<li>🌸 Etapa 1: Fundamentos</li>
-<li>🌊 Etapa 2: Comunicación básica</li>
-<li>🍃 Etapa 3: Japonés cotidiano</li>
-<li>🎌 Etapa 4: Conversación elemental</li>
-</ul>
+<p id="homePercent">0% completado</p>
 </div>
 
 <div class="card">
-<h2>🎓 Lección 1: Saludos</h2>
+<h3>🗾 Las cuatro etapas</h3>
 
-<p class="japanese" id="japanese">こんにちは</p>
-<h3 id="romaji" style="text-align:center">Konnichiwa</h3>
-<p id="translation" style="text-align:center">Hola</p>
-
-<div style="text-align:center">
-<button onclick="previous()">⬅ Anterior</button>
-<button onclick="next()">Siguiente ➡</button>
-<button onclick="speak()">🔊 Escuchar</button>
+<div class="stage">
+<h3>🍃 Etapa 1 — Fundamentos</h3>
+<p>Semanas 1 a 3. Saludos, pronunciación, hiragana y gramática básica.</p>
 </div>
+
+<div class="stage">
+<h3>📜 Etapa 2 — Comunicación básica</h3>
+<p>Semanas 4 a 6. Información personal, números, verbos y katakana.</p>
+</div>
+
+<div class="stage">
+<h3>🏯 Etapa 3 — Japonés cotidiano</h3>
+<p>Semanas 7 a 9. Restaurantes, transporte, rutinas y kanji iniciales.</p>
+</div>
+
+<div class="stage">
+<h3>⭐ Etapa 4 — Conversación elemental</h3>
+<p>Semanas 10 a 12. Experiencias, planes, opiniones y conversación.</p>
+</div>
+
+</div>
+</section>
+
+<!-- CLASES -->
+
+<section id="clases" class="page">
+
+<h2>📚 Mis clases</h2>
+
+<div class="card">
+<h3>Tu programa de 12 semanas</h3>
+<p>Abre cada semana para conocer los temas y su contenido.</p>
+<p class="note">Marca una semana como completada cuando hayas terminado sus actividades con Sensei.</p>
+</div>
+
+<div id="weeks"></div>
+
+</section>
+
+<!-- VOCABULARIO -->
+
+<section id="vocabulario" class="page">
+
+<h2>🃏 Pergaminos de vocabulario</h2>
+
+<div class="card">
+
+<h3>Lección 1 — Saludos y presentaciones</h3>
+
+<p class="center">Haz clic en la tarjeta para descubrir su significado.</p>
+
+<div class="flashcard" id="flashcard" onclick="flipCard()">
+
+<div id="jpWord" class="japanese">こんにちは</div>
+
+<h3 id="romajiWord" hidden>Konnichiwa</h3>
+
+<p id="spanishWord" hidden>Hola</p>
+
+<small id="cardHint">Toca para descubrir</small>
+
+</div>
+
+<p class="center" id="cardCount"></p>
+
+<div class="center">
+<button class="btn" onclick="previousCard()">⬅ Anterior</button>
+<button class="btn orange" onclick="flipCard()">Voltear</button>
+<button class="btn" onclick="nextCard()">Siguiente ➡</button>
+<button class="btn" onclick="speakCurrent()">🔊 Escuchar</button>
+</div>
+
+</div>
+</section>
+
+<!-- PRONUNCIACIÓN -->
+
+<section id="pronunciacion" class="page">
+
+<h2>🎤 Entrenamiento de pronunciación</h2>
+
+<div class="card center">
+
+<h3>Escucha y repite</h3>
+
+<div id="pronJp" class="japanese">こんにちは</div>
+
+<h3 id="pronRomaji">Konnichiwa</h3>
+
+<p id="pronSpanish">Hola</p>
+
+<button class="btn" onclick="speakPronunciation()">🔊 Escuchar lento</button>
+
+<button class="btn orange" onclick="nextPronunciation()">Siguiente expresión</button>
+
 </div>
 
 <div class="card">
-<h2>✏️ Ejercicio</h2>
-<p>¿Qué significa こんにちは (Konnichiwa)?</p>
+<h3>🍃 Método de práctica</h3>
+<p>Primero escucha la palabra japonesa.</p>
+<p>Después repítela lentamente tres veces.</p>
+<p>Finalmente intenta decirla sin mirar la escritura.</p>
+<p class="note">Para recibir correcciones orales, puedes conversar con Sensei mediante ChatGPT. Esta página reproduce audio, pero todavía no evalúa tu pronunciación automáticamente.</p>
+</div>
 
-<button onclick="answer(false)">Gracias</button>
-<button onclick="answer(true)">Hola</button>
-<button onclick="answer(false)">Adiós</button>
+</section>
 
-<p id="result"></p>
+<!-- EVALUACIONES -->
+
+<section id="evaluaciones" class="page">
+
+<h2>📝 Examen de entrenamiento</h2>
+
+<div class="card">
+
+<h3>Evaluación 1 — Saludos</h3>
+
+<p id="question"></p>
+
+<div id="answers"></div>
+
+<p id="feedback"></p>
+
+<p id="questionCount"></p>
+
+<button class="btn orange" onclick="restartQuiz()">Reiniciar evaluación</button>
+
+</div>
+
+</section>
+
+<!-- PROGRESO -->
+
+<section id="progreso" class="page">
+
+<h2>📊 Mi progreso</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>📚 Semanas completadas</h3>
+<h2 id="completedWeeks">0 / 12</h2>
+<div class="progress">
+<div class="progress-bar" id="progressBar"></div>
+</div>
+<p id="progressText">0% del curso</p>
 </div>
 
 <div class="card">
-<h2>✅ Completar lección</h2>
-<button onclick="completeLesson()">
-Marcar lección como completada
-</button>
+<h3>🏅 Resultado de evaluación</h3>
+<h2 id="scoreDisplay">Sin realizar</h2>
+<p>Resultado de tu última evaluación.</p>
 </div>
 
+</div>
+
+<div class="card">
+<h3>🍃 Avance por etapa</h3>
+<div id="stageProgress"></div>
+</div>
+
+<div class="card">
+<p class="note">
+Tu progreso se guarda en este navegador.
+Si cambias de dispositivo, todavía no se sincronizará automáticamente.
+</p>
+</div>
+
+</section>
+
+</div>
+</div>
 </div>
 
 <script>
 
-const words = [
+const lessons = [
+["Fundamentos","Saludos, presentación y primeros hiragana",
+"こんにちは (Konnichiwa) — Hola. あ・い・う・え・お (a, i, u, e, o)."],
+["Fundamentos","Pronunciación y estructura de las oraciones",
+"わたしは がくせいです (Watashi wa gakusei desu) — Soy estudiante."],
+["Fundamentos","Partículas, vocabulario y repaso",
+"みずを のみます (Mizu o nomimasu) — Bebo agua."],
+["Comunicación básica","Preguntas personales y números",
+"おなまえは なんですか (Onamae wa nan desu ka) — ¿Cómo te llamas?"],
+["Comunicación básica","Familia, casa, comida y horas",
+"いま なんじですか (Ima nanji desu ka) — ¿Qué hora es?"],
+["Comunicación básica","Verbos, adjetivos y katakana",
+"すしが すきです (Sushi ga suki desu) — Me gusta el sushi."],
+["Japonés cotidiano","Compras y restaurantes",
+"これを ください (Kore o kudasai) — Esto, por favor."],
+["Japonés cotidiano","Direcciones, transporte y rutinas",
+"えきは どこですか (Eki wa doko desu ka) — ¿Dónde está la estación?"],
+["Japonés cotidiano","Forma て, katakana y primeros kanji",
+"みてください (Mite kudasai) — Mire, por favor."],
+["Conversación elemental","Experiencias y planes",
+"あした いきます (Ashita ikimasu) — Iré mañana."],
+["Conversación elemental","Comparaciones, deseos y opiniones",
+"にほんに いきたいです (Nihon ni ikitai desu) — Quiero ir a Japón."],
+["Conversación elemental","Conversación y evaluación final",
+"じこしょうかい (Jikoshōkai) — Presentación personal."]
+];
+
+const vocab = [
 ["こんにちは","Konnichiwa","Hola"],
 ["おはようございます","Ohayō gozaimasu","Buenos días"],
 ["こんばんは","Konbanwa","Buenas noches (saludo)"],
 ["ありがとう","Arigatō","Gracias"],
 ["さようなら","Sayōnara","Adiós"],
-["はじめまして","Hajimemashite","Mucho gusto"]
+["はじめまして","Hajimemashite","Mucho gusto"],
+["わたし","Watashi","Yo"],
+["みず","Mizu","Agua"],
+["がくせい","Gakusei","Estudiante"],
+["ありがとうございます","Arigatō gozaimasu","Muchas gracias"]
 ];
 
-let index = 0;
+const questions = [
+["¿Qué significa こんにちは?",["Hola","Gracias","Adiós"],0],
+["¿Qué significa ありがとう?",["Agua","Gracias","Buenos días"],1],
+["¿Cómo se dice mucho gusto?",["こんばんは","はじめまして","さようなら"],1],
+["¿Qué significa みず?",["Estudiante","Yo","Agua"],2],
+["¿Qué significa がくせい?",["Estudiante","Profesor","Amigo"],0]
+];
 
-function showWord(){
-document.getElementById("japanese").innerText=words[index][0];
-document.getElementById("romaji").innerText=words[index][1];
-document.getElementById("translation").innerText=words[index][2];
+const $ = id => document.getElementById(id);
+
+function getSaved(key, fallback) {
+  try {
+    const value = localStorage.getItem(key);
+    return value === null ? fallback : JSON.parse(value);
+  } catch(e) {
+    return fallback;
+  }
 }
 
-function next(){
-index=(index+1)%words.length;
-showWord();
+let completed = getSaved("senseiNinjaWeeks", Array(12).fill(false));
+
+if (!Array.isArray(completed) || completed.length !== 12) {
+  completed = Array(12).fill(false);
 }
 
-function previous(){
-index=(index-1+words.length)%words.length;
-showWord();
+function openPage(id, button) {
+  document.querySelectorAll(".page").forEach(p => {
+    p.classList.toggle("active", p.id === id);
+  });
+
+  document.querySelectorAll(".nav").forEach(n => {
+    n.classList.remove("active");
+  });
+
+  if (button) button.classList.add("active");
+
+  window.scrollTo(0,0);
 }
 
-function speak(){
-let msg=new SpeechSynthesisUtterance(words[index][0]);
-msg.lang="ja-JP";
-msg.rate=0.75;
-speechSynthesis.speak(msg);
+function go(id) {
+  const button = [...document.querySelectorAll(".nav")]
+    .find(b => b.getAttribute("onclick").includes("'" + id + "'"));
+
+  openPage(id, button);
 }
 
-function answer(correct){
-document.getElementById("result").innerText =
-correct ? "🎉 ¡Correcto!" : "Inténtalo nuevamente.";
+function renderWeeks() {
+  $("weeks").innerHTML = lessons.map((lesson,i) => `
+    <details class="week">
+      <summary>Semana ${i+1} — ${lesson[1]} ${completed[i] ? "✅" : ""}</summary>
+      <p><b>Etapa:</b> ${lesson[0]}</p>
+      <p>${lesson[2]}</p>
+      <p><b>Método:</b> Escuchar, leer, repetir, practicar y evaluar.</p>
+      <label>
+        <input type="checkbox" data-week="${i}" ${completed[i] ? "checked" : ""}>
+        Marcar semana completada
+      </label>
+    </details>
+  `).join("");
+
+  document.querySelectorAll("[data-week]").forEach(box => {
+    box.addEventListener("change", () => {
+      completed[Number(box.dataset.week)] = box.checked;
+      localStorage.setItem("senseiNinjaWeeks", JSON.stringify(completed));
+      renderWeeks();
+      updateProgress();
+    });
+  });
 }
 
-function completeLesson(){
-localStorage.setItem("senseiLesson1","completed");
+function updateProgress() {
+  const count = completed.filter(Boolean).length;
+  const percent = Math.round(count / 12 * 100);
+
+  $("homeProgress").style.width = percent + "%";
+  $("progressBar").style.width = percent + "%";
+
+  $("homePercent").textContent = percent + "% completado";
+  $("progressText").textContent = percent + "% del curso";
+  $("completedWeeks").textContent = count + " / 12";
+
+  $("stageProgress").innerHTML = [0,1,2,3].map(i => {
+    const countStage = completed.slice(i*3,i*3+3).filter(Boolean).length;
+    return `<p>Etapa ${i+1}: ${countStage} de 3 semanas ${countStage===3 ? "🏅" : ""}</p>`;
+  }).join("");
+
+  const score = getSaved("senseiNinjaScore", null);
+  $("scoreDisplay").textContent = score === null
+    ? "Sin realizar"
+    : score + " / " + questions.length;
+}
+
+let cardIndex = 0;
+let flipped = false;
+
+function showCard() {
+  const word = vocab[cardIndex];
+
+  $("jpWord").textContent = word[0];
+  $("romajiWord").textContent = word[1];
+  $("spanishWord").textContent = word[2];
+
+  $("romajiWord").hidden = !flipped;
+  $("spanishWord").hidden = !flipped;
+
+  $("cardHint").textContent = flipped
+    ? "Toca para ocultar"
+    : "Toca para descubrir";
+
+  $("cardCount").textContent =
+    "Tarjeta " + (cardIndex+1) + " de " + vocab.length;
+}
+
+function flipCard() {
+  flipped = !flipped;
+  showCard();
+}
+
+function nextCard() {
+  cardIndex = (cardIndex + 1) % vocab.length;
+  flipped = false;
+  showCard();
+}
+
+function previousCard() {
+  cardIndex = (cardIndex - 1 + vocab.length) % vocab.length;
+  flipped = false;
+  showCard();
+}
+
+function speakJapanese(text, slow=false) {
+  if (!("speechSynthesis" in window)) {
+    alert("Tu navegador no permite reproducir voz.");
+    return;
+  }
+
+  speechSynthesis.cancel();
+
+  const speech = new SpeechSynthesisUtterance(text);
+  speech.lang = "ja-JP";
+  speech.rate = slow ? 0.7 : 0.85;
+
+  const voice = speechSynthesis.getVoices()
+    .find(v => v.lang.toLowerCase().startsWith("ja"));
+
+  if (voice) speech.voice = voice;
+
+  speechSynthesis.speak(speech);
+}
+
+function speakCurrent() {
+  speakJapanese(vocab[cardIndex][0]);
+}
+
+let pronIndex = 0;
+
+function showPronunciation() {
+  $("pronJp").textContent = vocab[pronIndex][0];
+  $("pronRomaji").textContent = vocab[pronIndex][1];
+  $("pronSpanish").textContent = vocab[pronIndex][2];
+}
+
+function speakPronunciation() {
+  speakJapanese(vocab[pronIndex][0],true);
+}
+
+function nextPronunciation() {
+  pronIndex = (pronIndex + 1) % vocab.length;
+  showPronunciation();
+}
+
+let questionIndex = 0;
+let points = 0;
+let answered = false;
+
+function renderQuestion() {
+  answered = false;
+  $("feedback").textContent = "";
+
+  if (questionIndex >= questions.length) {
+    $("question").textContent = "¡Evaluación terminada!";
+    $("answers").innerHTML = "";
+    $("feedback").textContent = "Resultado: " + points + " de " + questions.length;
+
+    localStorage.setItem("senseiNinjaScore", JSON.stringify(points));
+    updateProgress();
+    return;
+  }
+
+  const q = questions[questionIndex];
+  $("question").textContent = q[0];
+  $("questionCount").textContent =
+    "Pregunta " + (questionIndex+1) + " de " + questions.length;
+
+  $("answers").innerHTML = q[1].map((option,i) =>
+    `<button class="option" onclick="checkAnswer(${i})">${option}</button>`
+  ).join("");
+}
+
+function checkAnswer(choice) {
+  if (answered) return;
+  answered = true;
+
+  const q = questions[questionIndex];
+  const correct = choice === q[2];
+
+  if (correct) points++;
+
+  $("feedback").textContent = correct
+    ? "✅ ¡Correcto!"
+    : "💡 Respuesta correcta: " + q[1][q[2]];
+
+  document.querySelectorAll(".option").forEach(b => b.disabled = true);
+
+  const next = document.createElement("button");
+  next.className = "btn";
+  next.textContent = "Siguiente pregunta →";
+
+  next.onclick = () => {
+    questionIndex++;
+    renderQuestion();
+  };
+
+  $("answers").appendChild(next);
+}
+
+function restartQuiz() {
+  questionIndex = 0;
+  points = 0;
+  renderQuestion();
+}
+
+renderWeeks();
 updateProgress();
-}
-
-function updateProgress(){
-let completed =
-localStorage.getItem("senseiLesson1")==="completed";
-
-let progress=completed?100:0;
-
-document.getElementById("progress").style.width=progress+"%";
-document.getElementById("progressText").innerText =
-"Lección 1: "+progress+"% completada";
-}
-
-updateProgress();
+showCard();
+showPronunciation();
+renderQuestion();
 
 </script>
 
